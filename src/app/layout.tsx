@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     images: ["/card.png"],
   },
   verification: {
-    google: "",
+    google: "Q2d_2g4XEV5pIiAAxAEDIvhDvj6-4BihRRx9EcNKkDk",
   },
 };
 
