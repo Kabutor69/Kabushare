@@ -56,34 +56,40 @@ export default function HomePage() {
     setError(null);
 
     try {
-      const formData = new FormData();
-      files.forEach((file) => formData.append('file', file));
+      const { upload } = await import('@vercel/blob/client');
+      const results = [];
 
-      const progressInterval = setInterval(() => {
-        setProgress((prev) => Math.min(prev + 5, 95));
-      }, 300);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const accessId = Math.random().toString(36).substring(2, 18);
 
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+        const blob = await upload(file.name, file, {
+          access: 'public',
+          handleUploadUrl: '/api/upload',
+          clientPayload: JSON.stringify({
+            accessId,
+            fileSize: file.size,
+            fileType: file.type,
+          }),
+          onUploadProgress: (p) => {
+            const totalProgress = ((i + p.percentage / 100) / files.length) * 100;
+            setProgress(Math.round(totalProgress));
+          },
+        });
 
-      clearInterval(progressInterval);
-      setProgress(100);
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Upload failed');
+        results.push({ success: true, accessId });
       }
 
-      const data = await response.json() as { files: { success: boolean; accessId: string }[] };
-      const ids = data.files
+      setProgress(100);
+
+      const ids = results
         .filter((f) => f.success)
         .map((f) => f.accessId)
         .join(',');
 
       router.push(`/success?ids=${ids}`);
     } catch (err) {
+      console.error('Frontend upload error:', err);
       setError(err instanceof Error ? err.message : 'Upload failed');
       setProgress(0);
     } finally {

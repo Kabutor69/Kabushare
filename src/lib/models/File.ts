@@ -4,7 +4,8 @@ export interface IFile extends Document {
     fileName: string;
     fileSize: number;
     fileType: string;
-    gridFsId: string;
+    gridFsId?: string;
+    blobUrl?: string;
     accessId: string;
     createdAt: Date;
     expiresAt: Date;
@@ -26,7 +27,11 @@ const FileSchema = new Schema<IFile>(
         },
         gridFsId: {
             type: String,
-            required: true,
+            required: false,
+        },
+        blobUrl: {
+            type: String,
+            required: false,
         },
         accessId: {
             type: String,

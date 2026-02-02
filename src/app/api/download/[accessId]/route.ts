@@ -36,6 +36,17 @@ export async function GET(
             );
         }
 
+        if (file.blobUrl) {
+            return NextResponse.redirect(file.blobUrl);
+        }
+
+        if (!file.gridFsId) {
+            return NextResponse.json(
+                { error: 'File storage information missing' },
+                { status: 500 }
+            );
+        }
+
         const exists = await fileExists(file.gridFsId);
         if (!exists) {
             return NextResponse.json(
