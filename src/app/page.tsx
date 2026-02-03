@@ -104,7 +104,7 @@ export default function HomePage() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Kabushare
           </h1>
-          <p className="text-muted-foreground text-[10px] uppercase tracking-[0.2em] font-medium">
+          <p className="text-foreground/70 text-[10px] uppercase tracking-[0.2em] font-bold">
             Minimal File Sharing
           </p>
         </div>
@@ -138,7 +138,7 @@ export default function HomePage() {
               </div>
               <div>
                 <p className="text-sm font-medium">Drop files or click to add</p>
-                <p className="text-xs text-muted-foreground">Up to 100MB per file</p>
+                <p className="text-xs text-foreground/70">Up to 100MB per file</p>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@ export default function HomePage() {
           {files.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center justify-between px-1">
-                <h2 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                <h2 className="text-[10px] font-bold uppercase tracking-widest text-foreground/80">
                   Files ({files.length})
                 </h2>
                 <button
@@ -205,7 +205,7 @@ export default function HomePage() {
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                  <p className="text-xs text-center font-medium text-muted-foreground animate-pulse">
+                  <p className="text-xs text-center font-bold text-foreground/80 animate-pulse">
                     Uploading files... {progress}%
                   </p>
                 </div>
@@ -221,7 +221,7 @@ export default function HomePage() {
         </div>
 
         <div className="pt-12 text-center">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold opacity-50">
+          <p className="text-[10px] uppercase tracking-widest text-foreground/60 font-bold">
             Auto-delete after 48h • No registration • Encrypted
           </p>
         </div>

@@ -53,7 +53,6 @@ const FileSchema = new Schema<IFile>(
     }
 );
 
-FileSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 const FileModel: Model<IFile> =
     mongoose.models.File || mongoose.model<IFile>('File', FileSchema);
