@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Kabushare - Minimal & Secure Temporary File Sharing",
   description: "Share files securely with auto-expiring links. Files are automatically deleted after 48 hours. Minimal, fast, and private.",
-  keywords: ["'kabushare","file sharing", "temporary storage", "secure upload", "privacy", "minimalist app"],
+  keywords: ["'kabushare","kabu share","file sharing", "temporary storage", "secure upload", "privacy", "minimalist app","kabutor share","kabutorshare","kabu","kabutor"],
   authors: [{ name: "kabutor" }],
   creator: "kabutor",
   publisher: "kabutor",
