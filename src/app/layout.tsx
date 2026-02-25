@@ -40,6 +40,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "Q2d_2g4XEV5pIiAAxAEDIvhDvj6-4BihRRx9EcNKkDk",
+    other: {
+      "msvalidate.01": ["5DBC7BAA3648D08C958D38694B757C39"],
+    },
   },
 };
 
