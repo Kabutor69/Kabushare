@@ -2,7 +2,7 @@ import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import FileModel from '@/lib/models/File';
-import { generateAccessId, calculateExpirationDate } from '@/lib/utils';
+import { generateAccessId, calculateExpirationDate, validateFileType, validateFileSize, sanitizeFilename } from '@/lib/utils';
 
 export async function POST(request: Request): Promise<NextResponse> {
     const body = (await request.json()) as HandleUploadBody;
@@ -17,6 +17,15 @@ export async function POST(request: Request): Promise<NextResponse> {
                 clientPayload,
             ) => {
                 const payload = clientPayload ? JSON.parse(clientPayload) : {};
+
+                if (!payload.fileType || !validateFileType(payload.fileType)) {
+                    throw new Error('File type not allowed');
+                }
+
+                if (!payload.fileSize || !validateFileSize(payload.fileSize)) {
+                    throw new Error('File size exceeds the 100MB limit');
+                }
+
                 return {
                     allowedContentTypes: undefined,
                     tokenPayload: JSON.stringify({
@@ -36,7 +45,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                     const expiresAt = calculateExpirationDate();
 
                     await FileModel.create({
-                        fileName: blob.pathname,
+                        fileName: sanitizeFilename(blob.pathname),
                         fileSize: payload.fileSize || 0,
                         fileType: payload.fileType || 'application/octet-stream',
                         blobUrl: blob.url,

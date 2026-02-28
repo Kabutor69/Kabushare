@@ -37,6 +37,21 @@ export async function GET(
         }
 
         if (file.blobUrl) {
+            // Only redirect to trusted Vercel Blob storage URLs
+            try {
+                const blobUrl = new URL(file.blobUrl);
+                if (!blobUrl.hostname.endsWith('.public.blob.vercel-storage.com')) {
+                    return NextResponse.json(
+                        { error: 'Invalid file storage URL' },
+                        { status: 500 }
+                    );
+                }
+            } catch {
+                return NextResponse.json(
+                    { error: 'Invalid file storage URL' },
+                    { status: 500 }
+                );
+            }
             return NextResponse.redirect(file.blobUrl);
         }
 

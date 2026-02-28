@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { nanoid } from 'nanoid';
 import { formatFileSize } from '@/lib/utils';
 
 export default function HomePage() {
@@ -61,7 +62,7 @@ export default function HomePage() {
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const accessId = Math.random().toString(36).substring(2, 18);
+        const accessId = nanoid(16);
 
         const blob = await upload(file.name, file, {
           access: 'public',
@@ -222,7 +223,7 @@ export default function HomePage() {
 
         <div className="pt-12 text-center">
           <p className="text-[10px] uppercase tracking-widest text-foreground/60 font-bold">
-            Auto-delete after 48h • No registration • Encrypted
+            Auto-delete after 48h • No registration
           </p>
         </div>
       </div>
